@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -6,7 +7,7 @@ import 'package:mbti_storage/shared/bloc/states.dart';
 import 'package:mbti_storage/shared/components/components.dart';
 
 import '../shared/bloc/cubit.dart';
-
+import 'package:mbti_storage/xlider/flutter_xlider.dart';
 
 class layout extends StatelessWidget {
   var titleController = TextEditingController();
@@ -14,6 +15,27 @@ class layout extends StatelessWidget {
   var timeController = TextEditingController();
   var Scaffoldkey = GlobalKey<ScaffoldState>();
   var formkey = GlobalKey<FormState>();
+
+  List<String> mbtiItem = [
+    "ENFJ",
+    "ENTJ",
+    "ENFP",
+    "ENTP",
+    "ESFP",
+    "ESFJ",
+    "ESTP",
+    "ESTJ",
+    "INFP",
+    "INFJ",
+    "INTP",
+    "ISTP",
+    "ISFP",
+    "ISFJ",
+    "ISTJ",
+    "INTJ",
+  ];
+
+  var mbtistring;
 
 
   @override
@@ -37,10 +59,10 @@ class layout extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
-              backgroundColor: Colors.deepOrange,
+              backgroundColor: Colors.green,
               elevation: 0.1,
               title: Text(
-                'To-do',
+                '나의 MBTI 저장소',
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -56,7 +78,7 @@ class layout extends StatelessWidget {
                         time: timeController.text);
                   }
                 } else {
-                  
+
                   cubit.isBottomSheetShown = true;
                   Scaffoldkey.currentState!
                       .showBottomSheet(
@@ -67,38 +89,40 @@ class layout extends StatelessWidget {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+
+
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: defaultTextFormField(
                                     validator: ( value) {
                                       if (value!.isEmpty) {
-                                        return 'Tasks Must be not  empty';
+                                        return 'MBTI를 입력해주세요';
                                       }
                                       return null;
                                     },
-              
+
                                     controller: titleController,
                                     keyboaredType: TextInputType.text,
-                                    Label: 'Tasks title',
+                                    Label: 'MBTI',
                                     prefix: Icons.title,
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 10.0,
-                                ),
+                                      height: 10.0,
+                                    ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: defaultTextFormField(
 
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return 'Date Must be not empty';
+                                        return '검사 날짜를 입력해주세요';
                                       }
                                       return null;
                                     },
                                     controller: dateController,
                                     keyboaredType: TextInputType.datetime,
-                                    Label: 'Date',
+                                    Label: '검사 날짜',
                                     prefix: Icons.calendar_month,
                                     ontap: () {
                                       showDatePicker(
@@ -125,14 +149,14 @@ class layout extends StatelessWidget {
                                   child: defaultTextFormField(
                                     validator: ( value) {
                                       if (value!.isEmpty) {
-                                        return 'time must be not empty';
+                                        return '검사 시간을 입력해주세요';
                                       }
                                       return null;
                                     },
 
                                     controller: timeController,
                                     keyboaredType: TextInputType.datetime,
-                                    Label: 'Date',
+                                    Label: '검사 시간',
                                     prefix: Icons.watch,
                                     ontap: () {
                                       showTimePicker(
@@ -145,7 +169,7 @@ class layout extends StatelessWidget {
                                               value.format(context).toString(),
                                         },
                                       );
-                                    }, 
+                                    },
                                   ),
                                 ),
                                 /////
@@ -176,15 +200,15 @@ class layout extends StatelessWidget {
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.table_rows_sharp),
-                  label: 'Tasks',
+                  label: 'MY MBTI',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.done),
-                  label: 'Done',
+                  label: '평가받기',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.archive_outlined),
-                  label: 'Archived',
+                  label: 'item',
                 ),
               ],
             ),
@@ -195,6 +219,5 @@ class layout extends StatelessWidget {
     );
   }
 }
-
 
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "198090922505",
+    "project_id": "mbtistorage",
+    "storage_bucket": "mbtistorage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198090922505:android:c80901edce1bed5a1c76d8",
+        "android_client_info": {
+          "package_name": "com.candebug.mbti_storage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "198090922505-3lag1kmhprem7pcnmi4bbhb6d3qnspmj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2lhPDmi1LSDVSYyqw5lQZpeS5KRJ_cgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "198090922505-3lag1kmhprem7pcnmi4bbhb6d3qnspmj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
