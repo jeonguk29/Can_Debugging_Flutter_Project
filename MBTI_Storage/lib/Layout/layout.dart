@@ -7,7 +7,6 @@ import 'package:mbti_storage/shared/bloc/states.dart';
 import 'package:mbti_storage/shared/components/components.dart';
 
 import '../shared/bloc/cubit.dart';
-import 'package:mbti_storage/xlider/flutter_xlider.dart';
 
 class layout extends StatelessWidget {
   var titleController = TextEditingController();
