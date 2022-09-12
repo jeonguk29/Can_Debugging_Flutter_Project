@@ -2,11 +2,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
+import 'package:mbti_storage/Layout/today_survey.dart';
 import 'package:mbti_storage/shared/bloc/states.dart';
 import 'package:mbti_storage/shared/components/components.dart';
 
 import '../shared/bloc/cubit.dart';
+
 
 class layout extends StatelessWidget {
   var titleController = TextEditingController();
@@ -65,23 +68,49 @@ class layout extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                if (cubit.isBottomSheetShown) {
-                  if (Scaffoldkey.currentState != null &&
-                      formkey.currentState != null &&
-                      formkey.currentState!.validate()) {
-                    cubit.InsertIntoDataBase(
-                        title: titleController.text,
-                        date: dateController.text,
-                        time: timeController.text);
-                  }
-                } else {
+            floatingActionButton:  SpeedDial( //Speed dial menu
+              marginBottom: 10, //margin bottom
+              icon: Icons.menu, //icon on Floating action button
+              activeIcon: Icons.close, //icon when menu is expanded on button
+              backgroundColor: Colors.deepOrangeAccent, //background color of button
+              foregroundColor: Colors.white, //font color, icon color in button
+              activeBackgroundColor: Colors.deepPurpleAccent, //background color when menu is expanded
+              activeForegroundColor: Colors.white,
+              buttonSize: 56.0, //button size
+              visible: true,
+              closeManually: false,
+              curve: Curves.bounceIn,
+              overlayColor: Colors.black,
+              overlayOpacity: 0.5,
+              onOpen: () => print('OPENING DIAL'), // action when menu opens
+              onClose: () => print('DIAL CLOSED'), //action when menu closes
 
-                  cubit.isBottomSheetShown = true;
-                  Scaffoldkey.currentState!
-                      .showBottomSheet(
-                        (context) => Container(
+              elevation: 8.0, //shadow elevation of button
+              shape: CircleBorder(), //shape of button
+
+              children: [
+                SpeedDialChild( //speed dial child
+                  child: Icon(Icons.edit),
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                  label: 'MBTI 검사 등록', //이름 변경
+                  labelStyle: TextStyle(fontSize: 18.0),
+                  onTap: () {
+                    if (cubit.isBottomSheetShown) {
+                      if (Scaffoldkey.currentState != null &&
+                          formkey.currentState != null &&
+                          formkey.currentState!.validate()) {
+                        cubit.InsertIntoDataBase(
+                            title: titleController.text,
+                            date: dateController.text,
+                            time: timeController.text);
+                      }
+                    } else {
+
+                      cubit.isBottomSheetShown = true;
+                      Scaffoldkey.currentState!
+                          .showBottomSheet(
+                            (context) => Container(
                           color: Colors.white,
                           child: Form(
                             key: formkey,
@@ -107,8 +136,8 @@ class layout extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                      height: 10.0,
-                                    ),
+                                  height: 10.0,
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: defaultTextFormField(
@@ -125,16 +154,16 @@ class layout extends StatelessWidget {
                                     prefix: Icons.calendar_month,
                                     ontap: () {
                                       showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime.now(),
-                                              lastDate:
-                                                  DateTime.parse('2030-01-01'))
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime.now(),
+                                          lastDate:
+                                          DateTime.parse('2030-01-01'))
                                           .then((value) => {
-                                                dateController.text =
-                                                    DateFormat.yMMMd()
-                                                        .format(value!),
-                                              });
+                                        dateController.text =
+                                            DateFormat.yMMMd()
+                                                .format(value!),
+                                      });
                                     },
                                   ),
                                 ),
@@ -162,7 +191,7 @@ class layout extends StatelessWidget {
                                         context: context,
                                         initialTime: TimeOfDay.now(),
                                       ).then(
-                                        (value) => {
+                                            (value) => {
                                           print(value!.format(context)),
                                           timeController.text =
                                               value.format(context).toString(),
@@ -177,17 +206,28 @@ class layout extends StatelessWidget {
                           ),
                         ),
                       )
-                      .closed
-                      .then((value) {
-                    cubit.ChangebottomSheet(isShown: false, icon: Icons.edit);
-                  });
-                  cubit.ChangebottomSheet(isShown: true, icon: Icons.add);
-                }
-              }, ////
-
-              child: Icon(
-                cubit.FloatIcon,
-              ),
+                          .closed
+                          .then((value) {
+                        cubit.ChangebottomSheet(isShown: false, icon: Icons.edit);
+                      });
+                      cubit.ChangebottomSheet(isShown: true, icon: Icons.add);
+                    }
+                  }, ////
+                ),
+                SpeedDialChild(
+                  child: Icon(Icons.newspaper),
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  label: '게시판 작성',
+                  labelStyle: TextStyle(fontSize: 18.0),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => todaysurvey()),
+                    );
+                  },
+                ),
+              ],
             ),
             bottomNavigationBar: BottomNavigationBar(
               selectedFontSize: 20.0,
@@ -199,11 +239,11 @@ class layout extends StatelessWidget {
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.table_rows_sharp),
-                  label: 'MY MBTI',
+                  label: '나의 MBTI',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.done),
-                  label: '평가받기',
+                  label: '게시판',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.archive_outlined),

@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mbti_storage/shared/bloc/states.dart';
 import 'package:flutter/material.dart';
 
+import '../../Layout/today_survey.dart';
+
 class appCubit extends Cubit<States>
 {
   appCubit():super(InitialState());
@@ -22,7 +24,7 @@ class appCubit extends Cubit<States>
   List<Map>DoneTasks=[];
   List<Map>ArchivedTasks=[];
 
-  List<Widget>Screens=[newTasks(),doneTasks(),archivedTasks()];
+  List<Widget>Screens=[newTasks(),todaysurvey(),archivedTasks()];
   List<String>titles=['New tasks','Done tasks','Archived tasks'];
 
   void ChangeNavBarIndex(int index)
