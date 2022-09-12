@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.candebug.mbti_storage">
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
         android:label="mbti_storage"
         android:name="${applicationName}"
@@ -31,6 +30,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-   </application>
-
+    </application>
 </manifest>

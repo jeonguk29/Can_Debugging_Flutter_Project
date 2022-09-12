@@ -3,12 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mbti_storage/Layout/WelcomeScreen.dart';
 import 'package:mbti_storage/Layout/layout.dart';
 import 'package:mbti_storage/shared/bloc/cubit.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   runApp(const MyApp());
 }
 
