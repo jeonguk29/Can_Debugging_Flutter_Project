@@ -14,12 +14,17 @@ class todaysurvey extends StatefulWidget {
 class _todaysurveyState extends State<todaysurvey> {
 
   CollectionReference todaySuvry = FirebaseFirestore.instance.collection('todaySuvey');
-  final TextEditingController suveyController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController likeController = TextEditingController();
 
   Future<void> _update(DocumentSnapshot documentSnapshot) async {
-    suveyController.text = documentSnapshot['suvey'];
+    titleController.text = documentSnapshot['title'];
+    contentController.text = documentSnapshot['content'];
+    nameController.text = documentSnapshot['name'];
     likeController.text = documentSnapshot['like'];
+
 
     await showModalBottomSheet(
       isScrollControlled: true,
@@ -37,25 +42,39 @@ class _todaysurveyState extends State<todaysurvey> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
-                  controller: suveyController,
-                  decoration: InputDecoration(labelText: 'suvey'),
+                  controller: titleController,
+                  decoration: InputDecoration(labelText: '제목'),
+                ),
+                TextField(
+                  controller: contentController,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(labelText: '내용'),
+                ),
+                TextField(
+                  controller: nameController,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(labelText: '이름'),
                 ),
                 TextField(
                   controller: likeController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  decoration: InputDecoration(labelText: 'like'),
+                  decoration: InputDecoration(labelText: '좋아요'),
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    final String suvey = suveyController.text;
+                    final String title = titleController.text;
+                    final String content = contentController.text;
+                    final String name = nameController.text;
                     final String like = likeController.text;
                     await todaySuvry
                         .doc(documentSnapshot.id)
-                        .update({"suvey": suvey, "like": like});
-                    suveyController.text = "";
+                        .update({"title": title, "content": content, "name": name, "like": like});
+                    titleController.text = "";
+                    contentController.text = "";
+                    nameController.text = "";
                     likeController.text = "";
                     Navigator.of(context).pop();
                   },
@@ -86,8 +105,16 @@ class _todaysurveyState extends State<todaysurvey> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
-                  controller: suveyController,
-                  decoration: InputDecoration(labelText: 'suvey'),
+                  controller: titleController,
+                  decoration: InputDecoration(labelText: '제목'),
+                ),
+                TextField(
+                  controller: contentController,
+                  decoration: InputDecoration(labelText: '내용'),
+                ),
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(labelText: '이름'),
                 ),
                 TextField(
                   controller: likeController,
@@ -99,11 +126,15 @@ class _todaysurveyState extends State<todaysurvey> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    final String suvey = suveyController.text;
+                    final String title = titleController.text;
+                    final String content = contentController.text;
+                    final String name = nameController.text;
                     final String like = likeController.text;
-                    await todaySuvry.add({'suvey': suvey, 'like': like});
+                    await todaySuvry.add({"title": title, "content": content, "name": name, "like": like});
 
-                    suveyController.text = "";
+                    titleController.text = "";
+                    contentController.text = "";
+                    nameController.text = "";
                     likeController.text = "";
                     Navigator.of(context).pop();
                   },
@@ -137,8 +168,16 @@ class _todaysurveyState extends State<todaysurvey> {
                   return Card(
                     margin: EdgeInsets.only(left: 16,right: 16,top: 8,bottom: 8),
                     child: ListTile(
-                      title: Text(documentSnapshot['suvey']),
-                      subtitle: Text(documentSnapshot['like']),
+                      title: Text(documentSnapshot['title']),
+                      subtitle: Container(
+                        child: Row(
+                          children: [
+                            Text(documentSnapshot['content']),
+                            Text(documentSnapshot['name']),
+                            Text(documentSnapshot['like']),
+                          ],
+                        ),
+                      ),
                       trailing: SizedBox(
                         width: 100,
                         child: Row(

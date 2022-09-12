@@ -64,6 +64,7 @@ Widget taskItem(Map task,context)
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text("${task['name']}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                   Text("${task['title']}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                   SizedBox(height:6),
                   Text("${task['date']}"),

@@ -12,6 +12,7 @@ import '../shared/bloc/cubit.dart';
 
 
 class layout extends StatelessWidget {
+  var nameController = TextEditingController();
   var titleController = TextEditingController();
   var dateController = TextEditingController();
   var timeController = TextEditingController();
@@ -101,6 +102,7 @@ class layout extends StatelessWidget {
                           formkey.currentState != null &&
                           formkey.currentState!.validate()) {
                         cubit.InsertIntoDataBase(
+                            name: nameController.text,
                             title: titleController.text,
                             date: dateController.text,
                             time: timeController.text);
@@ -118,7 +120,25 @@ class layout extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
 
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: defaultTextFormField(
+                                    validator: ( value) {
+                                      if (value!.isEmpty) {
+                                        return '이름을 입력해주세요';
+                                      }
+                                      return null;
+                                    },
 
+                                    controller: nameController,
+                                    keyboaredType: TextInputType.text,
+                                    Label: '이름',
+                                    prefix: Icons.title,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: defaultTextFormField(
@@ -238,11 +258,11 @@ class layout extends StatelessWidget {
               },
               items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.table_rows_sharp),
+                  icon: Icon(Icons.account_circle),
                   label: '나의 MBTI',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.done),
+                  icon: Icon(Icons.article),
                   label: '게시판',
                 ),
                 BottomNavigationBarItem(

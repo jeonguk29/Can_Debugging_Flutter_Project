@@ -50,7 +50,7 @@ void CreateDataBase()
     onCreate: (Database db, int version) async {
       print("DB created");
   await db.execute(
-      'CREATE TABLE Tasks (id INTEGER PRIMARY KEY, title TEXT, time TEXT, date TEXT, status TEXT)').then((value) {
+      'CREATE TABLE Tasks (id INTEGER PRIMARY KEY, name TEXT, title TEXT, time TEXT, date TEXT, status TEXT)').then((value) {
         print("table created");
       }).catchError((err){print("error ${err}");});
 },
@@ -91,6 +91,7 @@ void GetData(Database db)
 
 Future InsertIntoDataBase(
   {
+    required String name,
     required String title,
     required String date,
     required String time
@@ -99,7 +100,7 @@ Future InsertIntoDataBase(
 {
   return await db.transaction((txn)async {
     return await txn.rawInsert(
-      'INSERT INTO tasks(title, time, date, status) VALUES("$title", "$time", "$date","new")').then((value) {
+      'INSERT INTO tasks(name, title, time, date, status) VALUES("$name","$title", "$time", "$date","new")').then((value) {
         print("raw inserted");
         emit(InsertIntoDB());
         GetData(db);
