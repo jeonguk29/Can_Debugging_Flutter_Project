@@ -17,13 +17,13 @@ class _todaysurveyState extends State<todaysurvey> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController likeController = TextEditingController();
+  final TextEditingController passwdController = TextEditingController();
 
   Future<void> _update(DocumentSnapshot documentSnapshot) async {
     titleController.text = documentSnapshot['title'];
     contentController.text = documentSnapshot['content'];
     nameController.text = documentSnapshot['name'];
-    likeController.text = documentSnapshot['like'];
+    passwdController.text = documentSnapshot['passwd'];
 
 
     await showModalBottomSheet(
@@ -56,7 +56,7 @@ class _todaysurveyState extends State<todaysurvey> {
                   decoration: InputDecoration(labelText: '이름'),
                 ),
                 TextField(
-                  controller: likeController,
+                  controller: passwdController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   decoration: InputDecoration(labelText: '좋아요'),
                 ),
@@ -68,14 +68,14 @@ class _todaysurveyState extends State<todaysurvey> {
                     final String title = titleController.text;
                     final String content = contentController.text;
                     final String name = nameController.text;
-                    final String like = likeController.text;
+                    final String passwd = passwdController.text;
                     await todaySuvry
                         .doc(documentSnapshot.id)
-                        .update({"title": title, "content": content, "name": name, "like": like});
+                        .update({"title": title, "content": content, "name": name, "passwd": passwd});
                     titleController.text = "";
                     contentController.text = "";
                     nameController.text = "";
-                    likeController.text = "";
+                    passwdController.text = "";
                     Navigator.of(context).pop();
                   },
                   child: Text('Update'),
@@ -117,9 +117,9 @@ class _todaysurveyState extends State<todaysurvey> {
                   decoration: InputDecoration(labelText: '이름'),
                 ),
                 TextField(
-                  controller: likeController,
+                  controller: passwdController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  decoration: InputDecoration(labelText: 'like'),
+                  decoration: InputDecoration(labelText: 'passwd'),
                 ),
                 SizedBox(
                   height: 20,
@@ -129,13 +129,13 @@ class _todaysurveyState extends State<todaysurvey> {
                     final String title = titleController.text;
                     final String content = contentController.text;
                     final String name = nameController.text;
-                    final String like = likeController.text;
-                    await todaySuvry.add({"title": title, "content": content, "name": name, "like": like});
+                    final String passwd = passwdController.text;
+                    await todaySuvry.add({"title": title, "content": content, "name": name, "passwd": passwd});
 
                     titleController.text = "";
                     contentController.text = "";
                     nameController.text = "";
-                    likeController.text = "";
+                    passwdController.text = "";
                     Navigator.of(context).pop();
                   },
                   child: Text('Update'),
@@ -156,55 +156,59 @@ class _todaysurveyState extends State<todaysurvey> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          appBar: AppBar(
+            title: Text("오늘의 주제"),
+          ),
           body: StreamBuilder(
-          stream: todaySuvry.snapshots(),
-          builder: (BuildContext context,
-              AsyncSnapshot<QuerySnapshot> streamSnapshot){
-            if(streamSnapshot.hasData){
-              return ListView.builder(
-                itemCount: streamSnapshot.data!.docs.length,
-                itemBuilder: (context,index){
-                  final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
-                  return Card(
-                    margin: EdgeInsets.only(left: 16,right: 16,top: 8,bottom: 8),
-                    child: ListTile(
-                      title: Text(documentSnapshot['title']),
-                      subtitle: Container(
-                        child: Row(
-                          children: [
-                            Text(documentSnapshot['content']),
-                            Text(documentSnapshot['name']),
-                            Text(documentSnapshot['like']),
-                          ],
+            stream: todaySuvry.snapshots(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot> streamSnapshot){
+              if(streamSnapshot.hasData){
+                return
+                  ListView.builder(
+                  itemCount: streamSnapshot.data!.docs.length,
+                  itemBuilder: (context,index){
+                    final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
+                    return Card(
+                      margin: EdgeInsets.only(left: 16,right: 16,top: 8,bottom: 8),
+                      child: ListTile(
+                        title: Text(documentSnapshot['title']),
+                        subtitle: Container(
+                          child: Row(
+                            children: [
+                              Text(documentSnapshot['content']),
+                              Text(documentSnapshot['name']),
+                              Text(documentSnapshot['passwd']),
+                            ],
+                          ),
+                        ),
+                        trailing: SizedBox(
+                          width: 100,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  _update(documentSnapshot);
+                                },
+                                icon: Icon(Icons.edit),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  _delete(documentSnapshot.id);
+                                },
+                                icon: Icon(Icons.delete),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      trailing: SizedBox(
-                        width: 100,
-                        child: Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                _update(documentSnapshot);
-                              },
-                              icon: Icon(Icons.edit),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                _delete(documentSnapshot.id);
-                              },
-                              icon: Icon(Icons.delete),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              );
-            }
-            return Center(child: CircularProgressIndicator());
-          },
-        ),
+                    );
+                  },
+                );
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
           floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.blue,
             onPressed: (){
