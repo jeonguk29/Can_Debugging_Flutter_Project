@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:mbti_storage/Layout/today_survey.dart';
 import 'package:mbti_storage/shared/bloc/states.dart';
 import 'package:mbti_storage/shared/components/components.dart';
+import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 
 import '../shared/bloc/cubit.dart';
 
@@ -62,27 +63,30 @@ class layout extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
-              backgroundColor: Colors.green,
+              backgroundColor: Color(0xff00a29b),
               elevation: 0.1,
               title: Text(
                 '나의 MBTI 저장소',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontFamily: 'RoundWind',fontWeight: FontWeight.w700, ),
               ),
             ),
+
+
+
             floatingActionButton:  SpeedDial( //Speed dial menu
-              marginBottom: 10, //margin bottom
+              //margin bottom
               icon: Icons.menu, //icon on Floating action button
               activeIcon: Icons.close, //icon when menu is expanded on button
-              backgroundColor: Colors.deepOrangeAccent, //background color of button
+              backgroundColor: Color(0xffffbd60), //background color of button
               foregroundColor: Colors.white, //font color, icon color in button
-              activeBackgroundColor: Colors.deepPurpleAccent, //background color when menu is expanded
-              activeForegroundColor: Colors.white,
-              buttonSize: 56.0, //button size
+              activeBackgroundColor: Colors.white, //background color when menu is expanded
+              activeForegroundColor: Color(0xffffbd60),
+              //button size
               visible: true,
               closeManually: false,
               curve: Curves.bounceIn,
               overlayColor: Colors.black,
-              overlayOpacity: 0.5,
+
               onOpen: () => print('OPENING DIAL'), // action when menu opens
               onClose: () => print('DIAL CLOSED'), //action when menu closes
 
@@ -92,10 +96,10 @@ class layout extends StatelessWidget {
               children: [
                 SpeedDialChild( //speed dial child
                   child: Icon(Icons.edit),
-                  backgroundColor: Colors.red,
+                  backgroundColor: Color(0xffffbd60),
                   foregroundColor: Colors.white,
                   label: 'MBTI 검사 등록', //이름 변경
-                  labelStyle: TextStyle(fontSize: 18.0),
+                  labelStyle: TextStyle(fontFamily: 'RoundWind', fontSize: 15.0),
                   onTap: () {
                     if (cubit.isBottomSheetShown) {
                       if (Scaffoldkey.currentState != null &&
@@ -108,7 +112,6 @@ class layout extends StatelessWidget {
                             time: timeController.text);
                       }
                     } else {
-
                       cubit.isBottomSheetShown = true;
                       Scaffoldkey.currentState!
                           .showBottomSheet(
@@ -119,7 +122,6 @@ class layout extends StatelessWidget {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: defaultTextFormField(
@@ -133,7 +135,7 @@ class layout extends StatelessWidget {
                                     controller: nameController,
                                     keyboaredType: TextInputType.text,
                                     Label: '이름',
-                                    prefix: Icons.title,
+                                    prefix: Icons.account_circle_rounded,
                                   ),
                                 ),
                                 SizedBox(
@@ -152,7 +154,7 @@ class layout extends StatelessWidget {
                                     controller: titleController,
                                     keyboaredType: TextInputType.text,
                                     Label: 'MBTI',
-                                    prefix: Icons.title,
+                                    prefix: Icons.title_rounded,
                                   ),
                                 ),
                                 SizedBox(
@@ -230,16 +232,15 @@ class layout extends StatelessWidget {
                           .then((value) {
                         cubit.ChangebottomSheet(isShown: false, icon: Icons.edit);
                       });
-                      cubit.ChangebottomSheet(isShown: true, icon: Icons.add);
                     }
                   }, ////
                 ),
                 SpeedDialChild(
                   child: Icon(Icons.newspaper),
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Color(0xffffbd60),
                   foregroundColor: Colors.white,
                   label: '게시판 작성',
-                  labelStyle: TextStyle(fontSize: 18.0),
+                  labelStyle: TextStyle(fontFamily: 'RoundWind', fontSize: 15.0),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -249,28 +250,26 @@ class layout extends StatelessWidget {
                 ),
               ],
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              selectedFontSize: 20.0,
-              elevation: 15.0,
+
+            bottomNavigationBar: BubbleBottomBar(
+              opacity: .2,
               currentIndex: cubit.currentIndex,
               onTap: (index) {
                 cubit.ChangeNavBarIndex(index);
               },
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle),
-                  label: '나의 MBTI',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.article),
-                  label: '게시판',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.archive_outlined),
-                  label: 'item',
-                ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+              elevation: 10,
+              hasNotch: true, //new
+              hasInk: true, //new, gives a cute ink effect
+              inkColor: Colors.black, //optional, uses theme color if not specified
+              items: <BubbleBottomBarItem>[
+                BubbleBottomBarItem(backgroundColor: Color(0xfff76e77), icon: Icon(Icons.account_circle, color: Colors.black,), activeIcon: Icon(Icons.account_circle, color: Color(0xfff76e77),), title: Text("나의 MBTI")),
+                BubbleBottomBarItem(backgroundColor: Color(0xfff76e77), icon: Icon(Icons.article, color: Colors.black,), activeIcon: Icon(Icons.article, color: Color(0xfff76e77),), title: Text("게시판")),
+                BubbleBottomBarItem(backgroundColor: Color(0xfff76e77), icon: Icon(Icons.archive_outlined, color: Colors.black,), activeIcon: Icon(Icons.archive_outlined, color: Color(0xfff76e77),), title: Text("Item")),
               ],
             ),
+
+
             body: cubit.Screens[cubit.currentIndex],
           );
         },

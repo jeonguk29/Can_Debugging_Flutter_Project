@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch:Colors.deepOrange ,
+        fontFamily: 'RoundWind',
+        primarySwatch: Colors.green,
         scaffoldBackgroundColor: Colors.white,
       ),
       home: BlocProvider(
