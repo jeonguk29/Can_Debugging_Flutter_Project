@@ -63,7 +63,7 @@ class layout extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
-              backgroundColor: Color(0xff00a29b),
+              backgroundColor: Color(0xfff76e77),
               elevation: 0.1,
               title: Text(
                 '나의 MBTI 저장소',
