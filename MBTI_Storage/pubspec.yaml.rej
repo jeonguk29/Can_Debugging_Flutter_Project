@@ -1,0 +1,11 @@
+diff a/MBTI_Storage/pubspec.yaml b/MBTI_Storage/pubspec.yaml	(rejected hunks)
+@@ -75,7 +75,8 @@
+ 
+   # To add assets to your application, add an assets section, like this:
+   assets:
+-    - assets/mbti-types.png
++    - assets/
++
+   #   - images/a_dot_ham.jpeg
+ 
+   # An image asset can refer to one or more resolution-specific "variants", see
