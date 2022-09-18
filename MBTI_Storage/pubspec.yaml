@@ -29,6 +29,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  kakao_flutter_sdk: ^1.2.2 # 전체 추가
+  kakao_flutter_sdk_user: ^1.2.2 # 카카오 로그인
+  kakao_flutter_sdk_talk: ^1.2.2 # 카카오톡(소셜, 메시지)
+  kakao_flutter_sdk_story: ^1.2.2 # 카카오스토리
+  kakao_flutter_sdk_share: ^1.2.2 # 카카오톡 공유
+  kakao_flutter_sdk_navi: ^1.2.2 # 카카오내비
+  store_redirect: ^2.0.1
+
   flutter:
     sdk: flutter
   bubble_bottom_bar: ^1.2.0

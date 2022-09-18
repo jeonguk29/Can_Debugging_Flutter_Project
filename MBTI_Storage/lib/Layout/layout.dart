@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mbti_storage/Layout/today_survey.dart';
 import 'package:mbti_storage/shared/bloc/states.dart';
 import 'package:mbti_storage/shared/components/components.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 import '../shared/bloc/cubit.dart';
 
@@ -247,6 +249,36 @@ class layout extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => todaysurvey()),
                     );
                   },
+                ),
+                SpeedDialChild(
+                  child: Icon(Icons.share),
+                  backgroundColor: Color(0xffffbd60),
+                  foregroundColor: Colors.white,
+                  label: '카카오톡 공유',
+                  labelStyle: TextStyle(fontSize: 15.0),
+                  onTap: () async {
+                    bool result = await ShareClient.instance.isKakaoTalkSharingAvailable();
+
+                    int templateId = 82812; // 템플릿 ID
+                    if (result) {
+                      print('카카오톡으로 공유 가능');
+                      // 사용자 정의 템플릿 ID
+
+                      try {
+                        Uri uri =
+                        // await ShareClient.instance.shareDefault(template: defaultFeed);     // 템플릿 직접 제작
+                        await ShareClient.instance.shareCustom(templateId: templateId);  // Kakao Developers 도구 템플릿
+                        await ShareClient.instance.launchKakaoTalk(uri);
+                        print('카카오톡 공유 완료');
+                      } catch (error) {
+                        Uri shareUrl = await WebSharerClient.instance.makeCustomUrl(
+                            templateId: templateId, templateArgs: {'key1': 'value1'});
+                        await launchBrowserTab(shareUrl);
+                        print('카카오톡 공유 실패 $error');
+                      }
+                    } else {
+                      StoreRedirect.redirect(androidAppId: "com.kakao.talk", iOSAppId: "362057947");  // 안드로이드는 플레이스토어, IOS는 앱스토어로 리다이렉트
+                    }},
                 ),
               ],
             ),
