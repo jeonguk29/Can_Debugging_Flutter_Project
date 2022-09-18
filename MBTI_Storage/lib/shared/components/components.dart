@@ -72,14 +72,16 @@ Widget taskItem(Map task,context)
                 ],
               )),
               SizedBox(width: 10,),
+
               IconButton(onPressed: (){
-                appCubit.get(context).UpdateDataBase(id: task['id'], status: 'done');
-              }, icon: Icon(Icons.done,color: PressedIconColor,),),
+                appCubit.get(context).UpdateDataBase(id: task['id'], status: 'new');
+              }, icon: Icon(Icons.chat,color: Colors.grey,),),
+
 
               IconButton(onPressed: (){
                 PressedIconColor=Colors.green;
                 appCubit.get(context).UpdateDataBase(id: task['id'], status: 'archived');
-              }, icon: Icon(Icons.archive,color: Colors.grey,),)
+              }, icon: Icon(Icons.star,color: Colors.amber,),)
 
 
             ],

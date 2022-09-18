@@ -19,6 +19,9 @@ class _todaysurveyState extends State<todaysurvey> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwdController = TextEditingController();
 
+
+ // CollectionReference todaynotice =  FirebaseFirestore.instance.collection('notice').doc("5ztLPy8mHBHybfc1XKE6").['notice_admin'];
+
   Future<void> _update(DocumentSnapshot documentSnapshot) async {
     titleController.text = documentSnapshot['title'];
     contentController.text = documentSnapshot['content'];
@@ -140,7 +143,8 @@ class _todaysurveyState extends State<todaysurvey> {
         contentController.text = "";
         nameController.text = "";
         passwdController.text = "";
-        Navigator.of(context).pop();
+        //Navigator.of(context, rootNavigator: true).pop();
+        Navigator.pop(context);
         },
         child: Text('Update'),
         ),
@@ -160,9 +164,24 @@ class _todaysurveyState extends State<todaysurvey> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          appBar: AppBar(
-            title: Text("오늘의 주제"),
+          appBar: PreferredSize( // 앱바 줄이기 https://freecatz.tistory.com/351
+            preferredSize: Size.fromHeight(65.0),
+              child:AppBar(
+                backgroundColor: Colors.orangeAccent,
+                  title: Center(child:
+                  Column(children: [
+                    Text("오늘의 주제"),
+                    Text("ESTJ 특")
+                    ],
+                  ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical( // 앱바 모양 깍기
+                      bottom: Radius.circular(58.0),
+                ),),
+              ),
           ),
+
           body: StreamBuilder(
             stream: todaySuvry.snapshots(),
             builder: (BuildContext context,
@@ -176,26 +195,55 @@ class _todaysurveyState extends State<todaysurvey> {
                       return Card(
                         margin: EdgeInsets.only(left: 16,right: 16,top: 8,bottom: 8),
                         child: ListTile(
-                          title: Text(documentSnapshot['title']),
-                          subtitle: Container(
+                          title: SizedBox(
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(documentSnapshot['content']),
-                                Text(documentSnapshot['name']),
-                                Text(documentSnapshot['passwd']),
-                              ],
+                                Icon(Icons.textsms),
+                                Text("  제목: ${documentSnapshot['title']}",style: TextStyle(color: Colors.black,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold)),
+                            ],
                             ),
                           ),
+                          subtitle: Container(
+                            child:
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.edit,size: 13),
+                                    Text("글쓴이: ${documentSnapshot['name']}",style: TextStyle(color: Colors.black54,
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.normal)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 280,
+                                      child: Text(documentSnapshot['content']),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+
+                          ),
+                          /*
                           trailing: SizedBox(
-                            width: 100,
+                            width: 30,
                             child: Row(
                               children: [
+                                /*
                                 IconButton(
                                   onPressed: () {
                                     _update(documentSnapshot);
                                   },
                                   icon: Icon(Icons.edit),
                                 ),
+                                 */
                                 IconButton(
                                   onPressed: () {
                                     _delete(documentSnapshot.id);
@@ -205,6 +253,7 @@ class _todaysurveyState extends State<todaysurvey> {
                               ],
                             ),
                           ),
+                          */
                         ),
                       );
                     },

@@ -297,7 +297,7 @@ class layout extends StatelessWidget {
               items: <BubbleBottomBarItem>[
                 BubbleBottomBarItem(backgroundColor: Color(0xfff76e77), icon: Icon(Icons.account_circle, color: Colors.black,), activeIcon: Icon(Icons.account_circle, color: Color(0xfff76e77),), title: Text("나의 MBTI")),
                 BubbleBottomBarItem(backgroundColor: Color(0xfff76e77), icon: Icon(Icons.article, color: Colors.black,), activeIcon: Icon(Icons.article, color: Color(0xfff76e77),), title: Text("게시판")),
-                BubbleBottomBarItem(backgroundColor: Color(0xfff76e77), icon: Icon(Icons.archive_outlined, color: Colors.black,), activeIcon: Icon(Icons.archive_outlined, color: Color(0xfff76e77),), title: Text("Item")),
+                BubbleBottomBarItem(backgroundColor: Color(0xfff76e77), icon: Icon(Icons.star, color: Colors.black,), activeIcon: Icon(Icons.star, color: Color(0xfff76e77),), title: Text("즐겨찾기")),
               ],
             ),
 

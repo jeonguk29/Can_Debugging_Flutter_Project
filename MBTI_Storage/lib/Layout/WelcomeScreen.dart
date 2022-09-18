@@ -23,16 +23,16 @@ class WelcomeScreen extends StatelessWidget {
                       Container(
                         height: 100,
                         padding: EdgeInsets.all(20),
-                        child: Text("앱 이름",
+                        child: Text("MBTI 저장소",
                           style: TextStyle(color: Colors.black,
                               fontFamily: 'RoundWind',
                               fontSize: 45, fontWeight: FontWeight.bold),),
                       ),
                       Container(
                         height: 50,
-                        child: Text("소제목",
+                        child: Text("내 친구, 주변 지인들의 MBTI를 저장하고 사람들과 소통해보세요",
                           style: TextStyle(color: Colors.black,
-                              fontFamily: 'RoundWind' , fontSize: 20,),),
+                              fontFamily: 'RoundWind' , fontSize: 13,),),
                       ),
                     ]
                   ),
