@@ -19,8 +19,13 @@ class _todaysurveyState extends State<todaysurvey> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwdController = TextEditingController();
 
+  /*
+  Stream documentStream = FirebaseFirestore.instance.collection('notice').doc('5ztLPy8mHBHybfc1XKE6').snapshots();
 
- // CollectionReference todaynotice =  FirebaseFirestore.instance.collection('notice').doc("5ztLPy8mHBHybfc1XKE6").['notice_admin'];
+  var t = firestore.collection("books").document("on_intelligence").get().then((DocumentSnapshot ds){ title = ds.data["title"];
+    print(title);
+  });
+*/
 
   Future<void> _update(DocumentSnapshot documentSnapshot) async {
     titleController.text = documentSnapshot['title'];
@@ -113,7 +118,7 @@ class _todaysurveyState extends State<todaysurvey> {
         children: [
         TextField(
         controller: titleController,
-          maxLength: 25, // 글자수 지정
+          maxLength: 18, // 글자수 지정
           textInputAction: TextInputAction.next, // 다음 텍스트 필드로 포커스 이동
         decoration: InputDecoration(
           labelText: '제목',
@@ -243,19 +248,20 @@ class _todaysurveyState extends State<todaysurvey> {
                             )
 
                           ),
-                          /*
+/*
                           trailing: SizedBox(
                             width: 30,
                             child: Row(
                               children: [
-                                /*
+/*
                                 IconButton(
                                   onPressed: () {
                                     _update(documentSnapshot);
                                   },
                                   icon: Icon(Icons.edit),
                                 ),
-                                 */
+
+ */
                                 IconButton(
                                   onPressed: () {
                                     _delete(documentSnapshot.id);
@@ -265,7 +271,7 @@ class _todaysurveyState extends State<todaysurvey> {
                               ],
                             ),
                           ),
-                          */
+*/
                         ),
                       );
                     },
