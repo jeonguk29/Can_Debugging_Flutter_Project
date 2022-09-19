@@ -33,7 +33,7 @@ class _todaysurveyState extends State<todaysurvey> {
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
-        return SizedBox(
+        return Expanded(
           child: Padding(
             padding: EdgeInsets.only(
                 top: 20,
@@ -113,18 +113,28 @@ class _todaysurveyState extends State<todaysurvey> {
         children: [
         TextField(
         controller: titleController,
-        decoration: InputDecoration(labelText: '제목'),
+          maxLength: 25, // 글자수 지정
+          textInputAction: TextInputAction.next, // 다음 텍스트 필드로 포커스 이동
+        decoration: InputDecoration(
+          labelText: '제목',
+        ),
         ),
         TextField(
         controller: contentController,
+          maxLength: 200, // 글자수 지정
+          textInputAction: TextInputAction.next, // 다음 텍스트 필드로 포커스 이동
         decoration: InputDecoration(labelText: '내용'),
         ),
         TextField(
         controller: nameController,
+          maxLength: 10, // 글자수 지정
+          textInputAction: TextInputAction.next, // 다음 텍스트 필드로 포커스 이동
         decoration: InputDecoration(labelText: '이름'),
         ),
         TextField(
         controller: passwdController,
+          maxLength: 20, // 글자수 지정
+          textInputAction: TextInputAction.done, // 키보드가 자동으로 내려가며 포커스 해제
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         decoration: InputDecoration(labelText: 'passwd'),
         ),
@@ -200,7 +210,8 @@ class _todaysurveyState extends State<todaysurvey> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Icon(Icons.textsms),
-                                Text("  제목: ${documentSnapshot['title']}",style: TextStyle(color: Colors.black,
+                                Text("  제목: ${documentSnapshot['title']}",
+                                    style: TextStyle(color: Colors.black,
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.bold)),
                             ],
@@ -214,7 +225,8 @@ class _todaysurveyState extends State<todaysurvey> {
                                 Row(
                                   children: [
                                     Icon(Icons.edit,size: 13),
-                                    Text("글쓴이: ${documentSnapshot['name']}",style: TextStyle(color: Colors.black54,
+                                    Text("글쓴이: ${documentSnapshot['name']}",
+                                        style: TextStyle(color: Colors.black54,
                                         fontSize: 13.0,
                                         fontWeight: FontWeight.normal)),
                                   ],
