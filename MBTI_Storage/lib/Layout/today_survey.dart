@@ -19,13 +19,29 @@ class _todaysurveyState extends State<todaysurvey> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwdController = TextEditingController();
 
+
+  String notice_value = "";
   /*
   Stream documentStream = FirebaseFirestore.instance.collection('notice').doc('5ztLPy8mHBHybfc1XKE6').snapshots();
 
   var t = firestore.collection("books").document("on_intelligence").get().then((DocumentSnapshot ds){ title = ds.data["title"];
     print(title);
   });
+
+  get_notice(s) async {
+    setState(() {
+      notice_value = s;
+      print(notice_value);
+    });
+    return notice_value;
+  }
+
+  void initState(){
+    super.initState();
+    Notice(todaynotice:todaynotice);
+  }
 */
+
 
   Future<void> _update(DocumentSnapshot documentSnapshot) async {
     titleController.text = documentSnapshot['title'];
@@ -118,7 +134,7 @@ class _todaysurveyState extends State<todaysurvey> {
         children: [
         TextField(
         controller: titleController,
-          maxLength: 18, // 글자수 지정
+          maxLength: 16, // 글자수 지정
           textInputAction: TextInputAction.next, // 다음 텍스트 필드로 포커스 이동
         decoration: InputDecoration(
           labelText: '제목',
@@ -188,7 +204,18 @@ class _todaysurveyState extends State<todaysurvey> {
                   title: Center(child:
                   Column(children: [
                     Text("오늘의 주제", style: TextStyle(fontSize: 20.0),),
-                    Text("ESTJ 특", style: TextStyle(fontSize: 18.0),),
+                  StreamBuilder( // //https://www.youtube.com/watch?v=YojoXx383TI   스트림 개념
+                  stream: FirebaseFirestore.instance
+                      .collection('notice')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                    final docs = snapshot.data!.docs;
+                          return Text(docs[0]['notice_admin'],
+                            style: TextStyle(fontSize: 20.0),
+                          );
+                        }
+                  ),
                   ],
                   ),
                   ),
@@ -246,7 +273,7 @@ class _todaysurveyState extends State<todaysurvey> {
                                   children: [
                                     SizedBox(
                                       width: 280,
-                                      child: Text(documentSnapshot['content']),
+                                      child: Text(documentSnapshot['content'],style: TextStyle(color: Colors.black54)),
                                     ),
                                   ],
                                 ),
