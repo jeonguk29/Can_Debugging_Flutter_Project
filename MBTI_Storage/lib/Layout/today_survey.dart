@@ -183,11 +183,13 @@ class _todaysurveyState extends State<todaysurvey> {
             preferredSize: Size.fromHeight(65.0),
               child:AppBar(
                 backgroundColor: Colors.orangeAccent,
+                  titleTextStyle: TextStyle(fontFamily: 'Roundwind',
+                      fontWeight: FontWeight.bold),
                   title: Center(child:
                   Column(children: [
-                    Text("오늘의 주제"),
-                    Text("ESTJ 특")
-                    ],
+                    Text("오늘의 주제", style: TextStyle(fontSize: 20.0),),
+                    Text("ESTJ 특", style: TextStyle(fontSize: 18.0),),
+                  ],
                   ),
                   ),
                   shape: RoundedRectangleBorder(
@@ -216,9 +218,11 @@ class _todaysurveyState extends State<todaysurvey> {
                               children: [
                                 Icon(Icons.textsms),
                                 Text("  제목: ${documentSnapshot['title']}",
-                                    style: TextStyle(color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold)),
+                                    style: TextStyle(
+                                        fontFamily: 'Roundwind',
+                                        color: Colors.black,
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold)),
                             ],
                             ),
                           ),
@@ -231,9 +235,11 @@ class _todaysurveyState extends State<todaysurvey> {
                                   children: [
                                     Icon(Icons.edit,size: 13),
                                     Text("글쓴이: ${documentSnapshot['name']}",
-                                        style: TextStyle(color: Colors.black54,
-                                        fontSize: 13.0,
-                                        fontWeight: FontWeight.normal)),
+                                        style: TextStyle(
+                                            fontFamily: 'Roundwind',
+                                            color: Colors.black54,
+                                            fontSize: 13.0,
+                                            fontWeight: FontWeight.normal)),
                                   ],
                                 ),
                                 Row(
