@@ -287,7 +287,7 @@ class layout extends StatelessWidget {
               opacity: .2,
               currentIndex: cubit.currentIndex,
               onTap: (index) {
-                cubit.ChangeNavBarIndex(index);
+                cubit.ChangeNavBarIndex(index!);
               },
               borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
               elevation: 10,
